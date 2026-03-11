@@ -1,0 +1,20 @@
+<?php
+
+namespace Database\Factories;
+
+use App\Models\Author;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+class AuthorFactory extends Factory
+{
+    protected $model = Author::class;
+
+    public function definition(): array
+    {
+        return [
+            'first_name' => fake()->firstName(),
+            'last_name' => fake()->lastName(),
+            'last_book_title' => fake()->optional()->sentence(3),
+        ];
+    }
+}
