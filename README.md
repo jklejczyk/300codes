@@ -77,7 +77,7 @@ dodaj info o artisan serve
 
 Do uruchomienia testów: php artisan test.
 
-Do wygenerowania tokenu bearer do testu GET /api/authors: php artisan token:generate.
+Do wygenerowania tokenu bearer do testu POST /api/books: php artisan token:generate.
 
 Do wygenerowania nowego autora: php artisan author:create.
 
