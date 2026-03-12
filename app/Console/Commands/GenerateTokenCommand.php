@@ -26,10 +26,11 @@ class GenerateTokenCommand extends Command
      */
     public function handle(): int
     {
+        // Dla uproszczenia generowanie tokenu bezpośrednio do jedynego usera w bazie
         $user = User::find(1);
 
         if (! $user) {
-            $this->error('Nie znaleziono użytkownika o ID 1.');
+            $this->error('Nie znaleziono użytkownika o ID 1. Uruchom seeder.');
 
             return self::FAILURE;
         }

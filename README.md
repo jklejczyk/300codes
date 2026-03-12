@@ -3,57 +3,57 @@
 ## Przbieg realizacji zadania
 
 1. Przygotowania
-- zapoznanie się z zadaniem
-- wygenerowanie poglądowego planu realizacji zadania przy pomocy AI 
-- weryfikacja zgodności planu ze specyfikacją zadania
+- Zapoznanie się z zadaniem.
+- Wygenerowanie poglądowego planu realizacji zadania przy pomocy AI.
+- Weryfikacja zgodności planu ze specyfikacją zadania.
 
 2. Setup projektu
-- instalacja czystego projektu Laravel
-- w celu ułatwienia uruchomienia projektu docelowo wykorzystana będzie baza sqlite
+- Instalacja czystego projektu Laravel.
+- W celu ułatwienia uruchomienia projektu wykorzystana będzie baza sqlite.
 
 3. Przygotowanie struktury bazy
-- napisanie modeli wraz z relacjami
-- na podstawie modeli wygenerowanie z claude code migracji oraz factory
-- poprawa migracji: ograniczenie długości kolumn ze stringiem oraz weryfikacja poprawności relacji, w szczególności kaskadowego usuwania
-- dodanie factory do seedera
-- wykonanie migracji i zaseedowanie bazy
+- Napisanie modeli wraz z relacjami.
+- Na podstawie modeli wygenerowanie z Claude Code migracji oraz factory.
+- Poprawa migracji: ograniczenie długości kolumn ze stringiem oraz weryfikacja poprawności relacji, w szczególności kaskadowego usuwania.
+- Dodanie Factory do Seedera.
+- Wykonanie migracji i zaseedowanie bazy.
 
 4. Obsługa API
-- utworzenie pustych kontrolerow (korzystając z artisan cli)
-- utworzenie pustych requestow (korzystając z artisan cli)
-- uzupełenie requestow przez claude code na podstawie danych z migracji i weryfikacji poprawności
-- wykonanie php artisan install:api w celu obsługi routow z api.php
-- uzupelnienie metod w AuthorController
-- wydzilenie logiki biznesowe do serwisu
-- utworzenie AuthorResource i AuthorCollection
-- przetestowanie routow w postmanie
-- na podstawie opracowanego schematu wygenerowanie z claude code obsługi api dla modelu Book
-- przetestowanie routow w postmanie
+- Utworzenie pustych Controllers (korzystając z artisan cli).
+- Utworzenie pustych Requests (korzystając z artisan cli).
+- Uzupełnienie klas Requests przez Claude Code na podstawie danych z migracji i weryfikacji poprawności.
+- Wykonanie php artisan install:api w celu dodania routes z api.php.
+- Uzupełnienie metod w AuthorController.
+- Wydzielenie logiki biznesowe do klas Service.
+- Utworzenie AuthorResource i AuthorCollection.
+- Przetestowanie routes w postmanie.
+- Na podstawie opracowanego schematu wygenerowanie z Claude Code obsługi api dla modelu Book.
+- Przetestowanie routes w postmanie.
 
-5. Obsługa Jobsów
-- utworzenie klasy joba
-- rozszerzenie logiki w 
+5. Obsługa Jobs
+- Utworzenie klasy UpdateAuthorLastBookTitleJob.
+- Rozszerzenie logiki w BookService.
 
 6. Testy
-- zezwolenie na RefreshDatabase w Pest.php
-- wygenerowanie testow z claude code
-- sprawdzenie czy testy pokrywają wszystkie przypadki
+- Zezwolenie na RefreshDatabase w Pest.php w celu ułatwienia pracy nad zadaniem.
+- Wygenerowanie testów z Claude Code.
+- Sprawdzenie czy testy pokrywają wszystkie przypadki.
 
 7. Sanctum
-- dodanie grupy z middlewarem auth:sanctum w api.php
-- uzupełnienie trait HasApiTokens w modelu User
-- skorygowaniu testów o konieczność uwierzytelniania i dodanie testu na brak tokenu i niepoprawny token
-- dodanie usera do seeda
-- dodanie komendy do wygenerowania testowego tokenu
+- Dodanie grupy z middleware "auth:sanctum" w api.php.
+- Uzupełnienie trait HasApiTokens w modelu User.
+- Skorygowaniu testów o konieczność uwierzytelniania i dodanie testu na brak tokenu i niepoprawny token.
+- Dodanie usera do seeda.
+- Dodanie komendy do wygenerowania testowego tokenu.
 
 8. Obsługa search
-- dodanie paremtru Request w AuthorController
-- dodanie filtra poprzez relację books
-- test parametru serach w postmanie
+- Dodanie parametru Request w AuthorController@index.
+- Dodanie filtra poprzez relację "books".
+- Test parametru serach w postmanie.
 
 9. Komenda dodająca autora
-- utworzenie komendy z artisan make:command
-- wygenerowanie treść commendy podająć prompt do claude code
+- Utworzenie komendy z artisan make:command.
+- Wygenerowanie treści komendy podając prompt do Claude Code.
 
 ## Zrealizowane funkcjonalności
 
@@ -61,19 +61,25 @@ Zrealizowano wszystkie wymagane oraz dodatkowe funkcjonalności.
 
 ## Instrukcja uruchomienia
 
-1. pobranie repozytorium lub sklonowanie repozytorium poprzez git clone https://github.com/jklejczyk/300codes.git
-2. instalacja zależności - composer install
-3. utworzenie pliku bazy danych - touch database/database.sqlite
-4. utworzenie pliku .env - cp .env.example .env
-5. wygenerowanie klucza aplikacji - php artisan key:generate
-6. uruchomienie migracji - php artisan migrate
-7. uzupełnienie bazy danymi testowymi - php artisan db:seed
-8. uruchomienie kolejki - php artisan queue:work
-9. można sprawdzać :)
+dodaj info o artisan serve
 
-do uruchomienia testów: php artisan test
-do wygenerowania tokenu bearer do testu GET /api/authors: php artisan token:generate
-do wygenerowania nowego autora: php artisan author:create
+1. Pobranie repozytorium lub sklonowanie repozytorium poprzez git clone https://github.com/jklejczyk/300codes.git.
+2. Przejście do folderu projektu - cd 300codes/.
+3. Instalacja zależności - composer install.
+4. Utworzenie pliku bazy danych - touch database/database.sqlite.
+5. Utworzenie pliku .env - cp .env.example .env.
+6. Wygenerowanie klucza aplikacji - php artisan key:generate.
+7. Uruchomienie migracji - php artisan migrate (wcześniej należy zainstalować rozszerzenie php do sqlite jeśli brakuje w systemie -  sudo apt install php-sqlite3).
+8. Uzupełnienie bazy danymi testowymi - php artisan db:seed.
+9. Uruchomienie aplikacji - php artisan serve.
+10. Uruchomienie kolejki - php artisan queue:work.
+11. można sprawdzać :)
+
+Do uruchomienia testów: php artisan test.
+
+Do wygenerowania tokenu bearer do testu GET /api/authors: php artisan token:generate.
+
+Do wygenerowania nowego autora: php artisan author:create.
 
 ## Dodatkowe uwagi
 
@@ -82,5 +88,6 @@ Na potrzeby zadania założyłem, że możemy dodawać do systemu autorów, któ
 ## Wersja demo
 
 Zadanie dostępne jest również pod adresem https://300codes.rozwiazaniawebowe.pl/
+token do testów: 1|51HdpGo5QRn6xT6j8o8iIHTWSMy3RyTomIJcrgSU3f69f16f
 
 
