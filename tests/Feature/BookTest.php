@@ -9,7 +9,7 @@ describe('POST /api/books', function () {
         $user = User::factory()->create();
         $authors = Author::factory(2)->create();
 
-        $response = $this->actingAs($user)->postJson('/api/books', [
+        $response = $this->actingAs($user)->postJson(route('books.store'), [
             'title' => 'Testowa książka',
             'author_ids' => $authors->pluck('id')->toArray(),
         ]);
@@ -22,7 +22,7 @@ describe('POST /api/books', function () {
     });
 
     test('zwraca 401 bez uwierzytelnienia', function () {
-        $response = $this->postJson('/api/books', [
+        $response = $this->postJson(route('books.store'), [
             'title' => 'Testowa książka',
             'author_ids' => [1],
         ]);
@@ -32,7 +32,7 @@ describe('POST /api/books', function () {
 
     test('zwraca 401 z niepoprawnym tokenem', function () {
         $response = $this->withHeader('Authorization', 'Bearer niepoprawny-token')
-            ->postJson('/api/books', [
+            ->postJson(route('books.store'), [
                 'title' => 'Testowa książka',
                 'author_ids' => [1],
             ]);
@@ -44,7 +44,7 @@ describe('POST /api/books', function () {
         $user = User::factory()->create();
         $author = Author::factory()->create();
 
-        $response = $this->actingAs($user)->postJson('/api/books', [
+        $response = $this->actingAs($user)->postJson(route('books.store'), [
             'author_ids' => [$author->id],
         ]);
 
@@ -55,7 +55,7 @@ describe('POST /api/books', function () {
     test('zwraca błąd walidacji bez autorów', function () {
         $user = User::factory()->create();
 
-        $response = $this->actingAs($user)->postJson('/api/books', [
+        $response = $this->actingAs($user)->postJson(route('books.store'), [
             'title' => 'Testowa książka',
         ]);
 
@@ -66,7 +66,7 @@ describe('POST /api/books', function () {
     test('zwraca błąd walidacji z nieistniejącym autorem', function () {
         $user = User::factory()->create();
 
-        $response = $this->actingAs($user)->postJson('/api/books', [
+        $response = $this->actingAs($user)->postJson(route('books.store'), [
             'title' => 'Testowa książka',
             'author_ids' => [999],
         ]);
@@ -80,7 +80,7 @@ describe('DELETE /api/books/{id}', function () {
     test('usuwa istniejącą książkę', function () {
         $book = Book::factory()->create();
 
-        $response = $this->deleteJson("/api/books/{$book->id}");
+        $response = $this->deleteJson(route('books.destroy', $book));
 
         $response->assertStatus(200)
             ->assertJsonPath('message', 'Książka usunięta pomyślnie.');
@@ -93,7 +93,7 @@ describe('DELETE /api/books/{id}', function () {
         $author = Author::factory()->create();
         $book->authors()->attach($author);
 
-        $this->deleteJson("/api/books/{$book->id}");
+        $this->deleteJson(route('books.destroy', $book));
 
         $this->assertDatabaseMissing('author_book', [
             'book_id' => $book->id,
@@ -102,7 +102,7 @@ describe('DELETE /api/books/{id}', function () {
     });
 
     test('zwraca 404 dla nieistniejącej książki', function () {
-        $response = $this->deleteJson('/api/books/999');
+        $response = $this->deleteJson(route('books.destroy', 999));
 
         $response->assertStatus(404);
     });
